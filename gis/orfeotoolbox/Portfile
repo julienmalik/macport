@@ -8,7 +8,7 @@ PortGroup           qt4     1.0
 name				orfeotoolbox
 version				3.11.0
 categories			gis
-maintainers			julien
+maintainers			gmail.com:julien.malik openmaintainer
 description			OrfeoToolbox - Free library of image processing algorithms
 long_description	ORFEO Toolbox (OTB) is distributed as an open source library of image \
                     processing algorithms. OTB is based on the medical image processing library \
@@ -26,23 +26,20 @@ homepage			http://www.orfeo-toolbox.org/otb/
 #distname			OrfeoToolbox-${version}
 #master_sites		http://sourceforge.net/projects/orfeo-toolbox/files/
 #use_bzip2			yes
-fetch.type          hg
-hg.url              /Users/jul/dev/src/OTB
-hg.tag              tip
-
-# No checksum since we use hg fetching
 #checksums           md5     d8506990f52563d39c7b916f500f282f \
 #                    sha1    e60f40e72c92f187d3725e6b93c13691d63a7fa7 \
 #                    rmd160  49303eab754f1e7febce388e657253563f65abed
 
+# For now, let's use the tip. Release 3.12 is imminent
+fetch.type          hg
+hg.url              http://hg.orfeo-toolbox.org/OTB
+hg.tag              tip
+
 worksrcdir			${name}-${version}
 
-#patchfiles			patch-spatialite_c.diff \
-#					patch-conversions_sip.diff \
-#					patch-CMakeLists_txt.diff
+#patchfiles			xxx.diff
 
-depends_lib-append 	port:clang-3.1 \
-                    port:tiff \
+depends_lib-append 	port:tiff \
                     port:jpeg \
 					port:libgeotiff \
                     port:gdal \
@@ -50,16 +47,18 @@ depends_lib-append 	port:clang-3.1 \
 					port:fltk-devel \
                     port:boost \
                     port:curl
-# TODO: python, java, swig, mapnik
-# TODO: libkml, tinyxml, muparser, openjpeg, libsvm
 
-#configure.compiler	macports-gcc-4.6
+# TODO : python, java, swig, mapnik
+# TODO (need patch in OTB): libkml, tinyxml, muparser, openjpeg, libsvm
+
+# Use default platform compiler as advised by macport devs
+# configure.compiler	macports-gcc-4.6
 
 post-extract {
 	system "cd ${worksrcpath} && mkdir build"
 }
 
-# TODO: filter unsupported compilers
+# TODO: filter out unsupported compilers
 
 # TODO: variant: python, qt, java, openjpeg, mapnik, visu
 # TODO default_variants	+python27 +qt ...
@@ -69,7 +68,6 @@ configure.cmd		cmake ..
 
 configure.args-append		"-DCMAKE_CXX_COMPILER=${configure.cxx}"
 configure.args-append		"-DCMAKE_C_COMPILER=${configure.cc}"
-#configure.args-append		"-DCMAKE_INSTALL_PREFIX=${applications_dir}"
 
 configure.args-append		"-DOTB_USE_EXTERNAL_EXPAT:BOOL=ON"
 configure.args-append		"-DEXPAT_INCLUDE_DIR:PATH=${prefix}/include"
@@ -119,3 +117,4 @@ configure.args-append		"-DITK_USE_OPTIMIZED_REGISTRATION_METHODS:BOOL=ON"
 use_parallel_build			yes
 build.dir					${worksrcpath}/build
 destroot.target				install
+
