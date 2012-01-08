@@ -73,6 +73,7 @@ configure.args-append		"-DCMAKE_C_COMPILER=${configure.cc}"
 #     CMAKE_BUILD_WITH_INSTALL_RPATH=ON
 # and CMAKE_INSTALL_NAME_DIR=${prefix}/lib
 configure.args-append		"-DOTB_INSTALL_LIB_DIR:PATH=/lib"
+configure.args-append		"-DITK_INSTALL_LIB_DIR:PATH=/lib"
 
 configure.args-append		"-DOTB_USE_EXTERNAL_EXPAT:BOOL=ON"
 configure.args-append		"-DEXPAT_INCLUDE_DIR:PATH=${prefix}/include"
