@@ -73,7 +73,7 @@ configure.args-append		"-DCMAKE_C_COMPILER=${configure.cc}"
 # But the cmake PortGroup is using 
 #     CMAKE_BUILD_WITH_INSTALL_RPATH=ON
 # and CMAKE_INSTALL_NAME_DIR=${prefix}/lib
-configure.args-append		"-DOTB_INSTALL_LIB_DIR:PATH=${prefix}/lib"
+configure.args-append		"-DOTB_INSTALL_LIB_DIR:PATH=/lib"
 
 configure.args-append		"-DOTB_USE_EXTERNAL_EXPAT:BOOL=ON"
 configure.args-append		"-DEXPAT_INCLUDE_DIR:PATH=${prefix}/include"
@@ -109,7 +109,7 @@ configure.args-append		"-DFLTK_IMAGES_LIBRARY:FILEPATH=${prefix}/lib/libfltk_ima
 #configure.args-append		"-DFLTK_MATH_LIBRARY:FILEPATH=/usr/lib/libm.dylib"
 configure.args-append		"-DFLTK_INCLUDE_DIR:PATH=${prefix}/include"
 
-configure.args-append		"-DBUILD_APPLICATIONS:BOOL=ON"
+configure.args-append		"-DBUILD_APPLICATIONS:BOOL=OFF"
 configure.args-append		"-DBUILD_EXAMPLES:BOOL=OFF"
 configure.args-append		"-DBUILD_TESTING:BOOL=OFF"
 
