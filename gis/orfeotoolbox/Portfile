@@ -59,7 +59,6 @@ post-extract {
 }
 
 # TODO: filter out unsupported compilers
-
 # TODO: variant: python, qt, java, openjpeg, mapnik, visu
 # TODO default_variants	+python27 +qt ...
 
