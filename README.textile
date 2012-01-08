@@ -1,0 +1,19 @@
+h1. Portfiles for Orfeo Toolbox (www.orfeo-toolbox.org/otb)
+
+h2. Installation Instructions:
+
+# Go to some directory where you want to save these Portfiles, this could be anywhere.
+Example:
+<pre>$ cd ~
+$ mkdir macports
+$ cd macports</pre>
+# Clone from GitHub
+<pre>$ git clone git@github.com:julienmalik/macport.git</pre>
+# Change to the newly created @macport@ directory
+<pre>$ cd macport</pre>
+# Create the port Index
+<pre>$ portindex</pre>
+# Add this folder to @/opt/local/etc/macports/sources.conf@
+<pre>$ [sudo] echo "file://`pwd`" >> /opt/local/etc/macports/sources.conf</pre>
+# Now you can install @orfeotoolbox@
+<pre>$ sudo port install orfeotoolbox</pre>
