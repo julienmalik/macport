@@ -48,7 +48,7 @@ depends_lib-append 	port:tiff \
                     port:boost \
                     port:curl
 
-# TODO : python, java, swig, mapnik, qt
+# TODO : python, java, swig, swig-python, swig-java, mapnik, qt
 # TODO (need patches in OTB): libkml, tinyxml, muparser, openjpeg, libsvm
 
 # Use default platform compiler as advised by macport devs
