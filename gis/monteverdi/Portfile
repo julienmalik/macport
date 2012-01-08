@@ -9,11 +9,11 @@ version				1.7.0
 categories			gis
 maintainers			gmail.com:julien.malik openmaintainer
 description			Image processing desktop application based on the OrfeoToolbox library
-long_description	Monteverdi is an image processing workshop based on the OTB library. It takes
-                    advantage of the streaming and multi-threading capabilities of the OTB
-                    pipeline. It also uses cool features as processing on demand and automagic
-                    file format I/O. Monteverdi is distributed under a free software license
-                    CeCILL (similar to GNU GPL) to encourage contribution from users and to
+long_description	Monteverdi is an image processing workshop based on the OTB library. It takes \
+                    advantage of the streaming and multi-threading capabilities of the OTB \
+                    pipeline. It also uses cool features as processing on demand and automagic \
+                    file format I/O. Monteverdi is distributed under a free software license \
+                    CeCILL (similar to GNU GPL) to encourage contribution from users and to \
                     promote reproducible research.
 
 platforms			darwin
