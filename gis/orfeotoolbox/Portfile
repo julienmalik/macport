@@ -1,31 +1,31 @@
 # -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
 # $Id$
 
-PortSystem			1.0
-PortGroup			cmake	1.0
+PortSystem          1.0
+PortGroup           cmake   1.0
 PortGroup           qt4     1.0
 
-name				orfeotoolbox
-version				3.11.0
-categories			gis
-maintainers			gmail.com:julien.malik openmaintainer
-description			OrfeoToolbox - Free library of image processing algorithms
-long_description	ORFEO Toolbox (OTB) is distributed as an open source library of image \
+name                orfeotoolbox
+version             3.11.0
+categories          gis
+maintainers         gmail.com:julien.malik openmaintainer
+description         OrfeoToolbox - Free library of image processing algorithms
+long_description    ORFEO Toolbox (OTB) is distributed as an open source library of image \
                     processing algorithms. OTB is based on the medical image processing library \
                     ITK and offers particular functionalities for remote sensing image processing \
                     in general and for high spatial resolution images in particular. OTB is \
                     distributed under a free software license CeCILL (similar to GNU GPL) to \
                     encourage contribution from users and to promote reproducible research.
 
-platforms			darwin
-license				CeCILL
+platforms           darwin
+license             CeCILL
 
-use_parallel_build	no
-homepage			http://www.orfeo-toolbox.org/otb/
+use_parallel_build  no
+homepage            http://www.orfeo-toolbox.org/otb/
 
-#distname			OrfeoToolbox-${version}
-#master_sites		http://sourceforge.net/projects/orfeo-toolbox/files/
-#use_bzip2			yes
+#distname           OrfeoToolbox-${version}
+#master_sites       http://sourceforge.net/projects/orfeo-toolbox/files/
+#use_bzip2          yes
 #checksums           md5     d8506990f52563d39c7b916f500f282f \
 #                    sha1    e60f40e72c92f187d3725e6b93c13691d63a7fa7 \
 #                    rmd160  49303eab754f1e7febce388e657253563f65abed
@@ -35,16 +35,16 @@ fetch.type          hg
 hg.url              http://hg.orfeo-toolbox.org/OTB
 hg.tag              tip
 
-worksrcdir			${name}-${version}
+worksrcdir          ${name}-${version}
 
-#patchfiles			xxx.diff
+#patchfiles         xxx.diff
 
-depends_lib-append 	port:tiff \
+depends_lib-append  port:tiff \
                     port:jpeg \
-					port:libgeotiff \
+                    port:libgeotiff \
                     port:gdal \
-					port:expat \
-					port:fltk-devel \
+                    port:expat \
+                    port:fltk-devel \
                     port:boost \
                     port:curl
 
@@ -52,75 +52,73 @@ depends_lib-append 	port:tiff \
 # TODO (need patches in OTB): libkml, tinyxml, muparser, openjpeg, libsvm
 
 # Use default platform compiler as advised by macport devs
-# configure.compiler	macports-gcc-4.6
+# configure.compiler    macports-gcc-4.6
 
 post-extract {
-	system "cd ${worksrcpath} && mkdir build"
+    system "cd ${worksrcpath} && mkdir build"
 }
 
 # TODO: filter out unsupported compilers
 # TODO: variant: python, qt, java, openjpeg, mapnik, visu
-# TODO default_variants	+python27 +qt ...
+# TODO default_variants +python27 +qt ...
 
-configure.dir		${worksrcpath}/build
-configure.cmd		cmake ..
+configure.dir       ${worksrcpath}/build
+configure.cmd       cmake ..
 
-configure.args-append		"-DCMAKE_CXX_COMPILER=${configure.cxx}"
-configure.args-append		"-DCMAKE_C_COMPILER=${configure.cc}"
+configure.args-append       "-DCMAKE_CXX_COMPILER=${configure.cxx}"
+configure.args-append       "-DCMAKE_C_COMPILER=${configure.cc}"
 
 # The default installation path for library is /lib/otb
 # But the cmake PortGroup is using
 #     CMAKE_BUILD_WITH_INSTALL_RPATH=ON
 # and CMAKE_INSTALL_NAME_DIR=${prefix}/lib
-configure.args-append		"-DOTB_INSTALL_LIB_DIR:PATH=/lib"
-configure.args-append		"-DITK_INSTALL_LIB_DIR:PATH=/lib"
+configure.args-append       "-DOTB_INSTALL_LIB_DIR:PATH=/lib"
+configure.args-append       "-DITK_INSTALL_LIB_DIR:PATH=/lib"
 
-configure.args-append		"-DOTB_USE_EXTERNAL_EXPAT:BOOL=ON"
-configure.args-append		"-DEXPAT_INCLUDE_DIR:PATH=${prefix}/include"
-configure.args-append		"-DEXPAT_LIBRARY:FILEPATH=${prefix}/lib/libexpat.dylib"
+configure.args-append       "-DOTB_USE_EXTERNAL_EXPAT:BOOL=ON"
+configure.args-append       "-DEXPAT_INCLUDE_DIR:PATH=${prefix}/include"
+configure.args-append       "-DEXPAT_LIBRARY:FILEPATH=${prefix}/lib/libexpat.dylib"
 
-configure.args-append		"-DGDAL_CONFIG=${prefix}/bin/gdal-config"
-configure.args-append		"-DGDAL_INCLUDE_DIR:PATH=${prefix}/include"
-configure.args-append		"-DGDAL_LIBRARY:FILEPATH=${prefix}/lib/libgdal.dylib"
+configure.args-append       "-DGDAL_CONFIG=${prefix}/bin/gdal-config"
+configure.args-append       "-DGDAL_INCLUDE_DIR:PATH=${prefix}/include"
+configure.args-append       "-DGDAL_LIBRARY:FILEPATH=${prefix}/lib/libgdal.dylib"
 
-configure.args-append		"-DGEOTIFF_INCLUDE_DIR:PATH=${prefix}/include"
-configure.args-append		"-DGEOTIFF_LIBRARY:FILEPATH=${prefix}/lib/libgeotiff.dylib"
+configure.args-append       "-DGEOTIFF_INCLUDE_DIR:PATH=${prefix}/include"
+configure.args-append       "-DGEOTIFF_LIBRARY:FILEPATH=${prefix}/lib/libgeotiff.dylib"
 
-configure.args-append		"-DTIFF_INCLUDE_DIR:PATH=${prefix}/include"
-configure.args-append		"-DTIFF_LIBRARY:FILEPATH=${prefix}/lib/libtiff.dylib"
+configure.args-append       "-DTIFF_INCLUDE_DIR:PATH=${prefix}/include"
+configure.args-append       "-DTIFF_LIBRARY:FILEPATH=${prefix}/lib/libtiff.dylib"
 
-configure.args-append		"-DJPEG_INCLUDE_DIR:PATH=${prefix}/include"
-configure.args-append		"-DJPEG_INCLUDE_DIRS:PATH=${prefix}/include"
-configure.args-append		"-DJPEG_LIBRARY:FILEPATH=${prefix}/lib/libjpeg.dylib"
+configure.args-append       "-DJPEG_INCLUDE_DIR:PATH=${prefix}/include"
+configure.args-append       "-DJPEG_INCLUDE_DIRS:PATH=${prefix}/include"
+configure.args-append       "-DJPEG_LIBRARY:FILEPATH=${prefix}/lib/libjpeg.dylib"
 
-configure.args-append		"-DOTB_USE_CURL:BOOL=ON"
-configure.args-append		"-DCURL_INCLUDE_DIR:PATH=${prefix}/include"
-configure.args-append		"-DCURL_LIBRARY:FILEPATHY=${prefix}/lib/libcurl.dylib"
+configure.args-append       "-DOTB_USE_CURL:BOOL=ON"
+configure.args-append       "-DCURL_INCLUDE_DIR:PATH=${prefix}/include"
+configure.args-append       "-DCURL_LIBRARY:FILEPATHY=${prefix}/lib/libcurl.dylib"
 
-configure.args-append		"-DOTB_USE_EXTERNAL_BOOST:BOOL=ON"
+configure.args-append       "-DOTB_USE_EXTERNAL_BOOST:BOOL=ON"
 
-configure.args-append		"-DOTB_USE_EXTERNAL_FLTK:BOOL=ON"
-configure.args-append		"-DFLTK_BASE_LIBRARY:FILEPATH=${prefix}/lib/libfltk.dylib"
-configure.args-append		"-DFLTK_CONFIG_SCRIPT:FILEPATH=${prefix}/bin/fltk-config"
-configure.args-append		"-DFLTK_FLUID_EXECUTABLE:FILEPATH=${prefix}/bin/fluid"
-configure.args-append		"-DFLTK_FORMS_LIBRARY:FILEPATH=${prefix}/lib/libfltk_forms.dylib"
-configure.args-append		"-DFLTK_GL_LIBRARY:FILEPATH=${prefix}/lib/libfltk_gl.dylib"
-configure.args-append		"-DFLTK_IMAGES_LIBRARY:FILEPATH=${prefix}/lib/libfltk_images.dylib"
-#configure.args-append		"-DFLTK_MATH_LIBRARY:FILEPATH=/usr/lib/libm.dylib"
-configure.args-append		"-DFLTK_INCLUDE_DIR:PATH=${prefix}/include"
+configure.args-append       "-DOTB_USE_EXTERNAL_FLTK:BOOL=ON"
+configure.args-append       "-DFLTK_BASE_LIBRARY:FILEPATH=${prefix}/lib/libfltk.dylib"
+configure.args-append       "-DFLTK_CONFIG_SCRIPT:FILEPATH=${prefix}/bin/fltk-config"
+configure.args-append       "-DFLTK_FLUID_EXECUTABLE:FILEPATH=${prefix}/bin/fluid"
+configure.args-append       "-DFLTK_FORMS_LIBRARY:FILEPATH=${prefix}/lib/libfltk_forms.dylib"
+configure.args-append       "-DFLTK_GL_LIBRARY:FILEPATH=${prefix}/lib/libfltk_gl.dylib"
+configure.args-append       "-DFLTK_IMAGES_LIBRARY:FILEPATH=${prefix}/lib/libfltk_images.dylib"
+#configure.args-append      "-DFLTK_MATH_LIBRARY:FILEPATH=/usr/lib/libm.dylib"
+configure.args-append       "-DFLTK_INCLUDE_DIR:PATH=${prefix}/include"
 
-configure.args-append		"-DBUILD_APPLICATIONS:BOOL=OFF"
-configure.args-append		"-DBUILD_EXAMPLES:BOOL=OFF"
-configure.args-append		"-DBUILD_TESTING:BOOL=OFF"
+configure.args-append       "-DBUILD_APPLICATIONS:BOOL=OFF"
+configure.args-append       "-DBUILD_EXAMPLES:BOOL=OFF"
+configure.args-append       "-DBUILD_TESTING:BOOL=OFF"
 
-configure.args-append		"-DWRAP_PYTHON:BOOL=OFF"
-configure.args-append		"-DWRAP_JAVA:BOOL=OFF"
-configure.args-append		"-DWRAP_QT:BOOL=OFF"
+configure.args-append       "-DWRAP_PYTHON:BOOL=OFF"
+configure.args-append       "-DWRAP_JAVA:BOOL=OFF"
+configure.args-append       "-DWRAP_QT:BOOL=OFF"
 
-configure.args-append		"-DITK_USE_REVIEW:BOOL=ON"
-configure.args-append		"-DITK_USE_OPTIMIZED_REGISTRATION_METHODS:BOOL=ON"
+configure.args-append       "-DITK_USE_REVIEW:BOOL=ON"
+configure.args-append       "-DITK_USE_OPTIMIZED_REGISTRATION_METHODS:BOOL=ON"
 
-use_parallel_build			yes
-build.dir					${worksrcpath}/build
-destroot.target				install
-
+build.dir                   ${worksrcpath}/build
+destroot.target             install
