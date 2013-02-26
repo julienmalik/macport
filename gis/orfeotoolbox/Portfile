@@ -6,7 +6,7 @@ PortGroup           cmake   1.0
 PortGroup           qt4     1.0
 
 name                orfeotoolbox
-version             3.11.0
+version             3.17.0
 categories          gis
 maintainers         gmail.com:julien.malik openmaintainer
 description         OrfeoToolbox - Free library of image processing algorithms
@@ -30,9 +30,9 @@ homepage            http://www.orfeo-toolbox.org/otb/
 #                    sha1    e60f40e72c92f187d3725e6b93c13691d63a7fa7 \
 #                    rmd160  49303eab754f1e7febce388e657253563f65abed
 
-# For now, let's use the tip. Release 3.12 is imminent
 fetch.type          hg
-hg.url              http://hg.orfeo-toolbox.org/OTB
+#hg.url              http://hg.orfeo-toolbox.org/OTB
+hg.url              /Users/otbval/Dashboard/nightly/OTB-Release/src 
 hg.tag              tip
 
 worksrcdir          ${name}-${version}
@@ -46,10 +46,14 @@ depends_lib-append  port:tiff \
                     port:expat \
                     port:fltk-devel \
                     port:boost \
-                    port:curl
+                    port:curl \
+                    port:libkml \
+                    port:muparser \
+                    port:tinyxml
+
 
 # TODO : python, java, swig, swig-python, swig-java, mapnik, qt
-# TODO (need patches in OTB): libkml, tinyxml, muparser, openjpeg, libsvm
+# TODO : openjpeg, libsvm
 
 # Use default platform compiler as advised by macport devs
 # configure.compiler    macports-gcc-4.6
@@ -60,7 +64,7 @@ post-extract {
 
 # TODO: filter out unsupported compilers
 # TODO: variant: python, qt, java, openjpeg, mapnik, visu
-# TODO default_variants +python27 +qt ...
+# TODO: default_variants +python27 +qt ...
 
 configure.dir       ${worksrcpath}/build
 configure.cmd       cmake ..
@@ -68,12 +72,12 @@ configure.cmd       cmake ..
 configure.args-append       "-DCMAKE_CXX_COMPILER=${configure.cxx}"
 configure.args-append       "-DCMAKE_C_COMPILER=${configure.cc}"
 
-# The default installation path for library is /lib/otb
+# The default installation path for library is ${prefix}/lib/otb
 # But the cmake PortGroup is using
 #     CMAKE_BUILD_WITH_INSTALL_RPATH=ON
 # and CMAKE_INSTALL_NAME_DIR=${prefix}/lib
-configure.args-append       "-DOTB_INSTALL_LIB_DIR:PATH=/lib"
-configure.args-append       "-DITK_INSTALL_LIB_DIR:PATH=/lib"
+configure.args-append       "-DOTB_INSTALL_LIB_DIR:PATH=lib"
+configure.args-append       "-DITK_INSTALL_LIB_DIR:PATH=lib"
 
 configure.args-append       "-DOTB_USE_EXTERNAL_EXPAT:BOOL=ON"
 configure.args-append       "-DEXPAT_INCLUDE_DIR:PATH=${prefix}/include"
@@ -109,13 +113,13 @@ configure.args-append       "-DFLTK_IMAGES_LIBRARY:FILEPATH=${prefix}/lib/libflt
 #configure.args-append      "-DFLTK_MATH_LIBRARY:FILEPATH=/usr/lib/libm.dylib"
 configure.args-append       "-DFLTK_INCLUDE_DIR:PATH=${prefix}/include"
 
-configure.args-append       "-DBUILD_APPLICATIONS:BOOL=OFF"
+configure.args-append       "-DBUILD_APPLICATIONS:BOOL=ON"
 configure.args-append       "-DBUILD_EXAMPLES:BOOL=OFF"
 configure.args-append       "-DBUILD_TESTING:BOOL=OFF"
 
 configure.args-append       "-DWRAP_PYTHON:BOOL=OFF"
 configure.args-append       "-DWRAP_JAVA:BOOL=OFF"
-configure.args-append       "-DWRAP_QT:BOOL=OFF"
+configure.args-append       "-DWRAP_QT:BOOL=ON"
 
 configure.args-append       "-DITK_USE_REVIEW:BOOL=ON"
 configure.args-append       "-DITK_USE_OPTIMIZED_REGISTRATION_METHODS:BOOL=ON"
